@@ -1,15 +1,30 @@
 <!DOCTYPE html>
-<html>
+<html lang="en">
 <head>
+    <meta charset="UTF-8">
     <title>Weather Station Dashboard</title>
     <link rel="stylesheet" href="styles.css">
+    <script src="https://cdn.jsdelivr.net/npm/chart.js"></script>
 </head>
 <body>
     <div class="container">
-        <h1>Current Weather Conditions</h1>
+        <h1>Weather Station Dashboard</h1>
         <div id="weather-data" class="weather-grid"></div>
-        <h2>Radar Map</h2>
-        <div id="radar-container"></div>
+        
+        <h2>Historical Data</h2>
+        <div class="chart-container">
+            <canvas id="weather-chart"></canvas>
+        </div>
+
+        <h2>Radar Map - Bronson, Texas</h2>
+        <div id="radar-container">
+            <iframe 
+                src="https://radar.weather.gov/ridge/standard/KEWX_loop.php?region=txz&product=N0R&mode=pan_zoom&zoom=8&centerlon=-94.6&centerlat=31.5" 
+                width="100%" 
+                height="100%" 
+                frameborder="0">
+            </iframe>
+        </div>
     </div>
     <script src="app.js"></script>
 </body>
