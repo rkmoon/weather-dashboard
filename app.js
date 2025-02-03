@@ -79,15 +79,19 @@ function updateDashboard(weather) {
 
 function initRadar() {
     const radarContainer = document.getElementById('radar-container');
-    // Ensure the iframe is set to Bronson, Texas
-    radarContainer.innerHTML = `
-        <iframe 
-            src="https://radar.weather.gov/ridge/standard/KEWX_loop.php?region=txz&product=N0R&mode=pan_zoom&zoom=8&centerlon=${BRONSON_LON}&centerlat=${BRONSON_LAT}" 
-            width="100%" 
-            height="100%" 
-            frameborder="0">
-        </iframe>
-    `;
+    // Clear previous iframe
+    radarContainer.innerHTML = '';
+    
+    // Create new iframe
+    const iframe = document.createElement('iframe');
+    iframe.width = "100%";
+    iframe.height = "100%";
+    iframe.frameBorder = "0";
+    iframe.src = `https://www.rainviewer.com/map.html?loc=${BRONSON_LAT},${BRONSON_LON},6&oFa=0&oC=0&oU=0&oCS=1&oF=0&oAP=1&c=1&o=83&lm=1&layer=radar&sm=1&sn=1`;
+    iframe.onload = () => console.log('Radar loaded successfully');
+    iframe.onerror = (e) => console.error('Radar loading error:', e);
+    
+    radarContainer.appendChild(iframe);
 }
 
 function updateWeatherChart() {
