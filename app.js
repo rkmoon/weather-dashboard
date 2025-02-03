@@ -34,15 +34,31 @@ function updateDashboard(weather) {
             <p>${weather.hourlyrainin}"</p>
         </div>
     `;
+    // Initialize radar after weather data is loaded
+    if (weather && weather.lat && weather.lon) {
+        initRadar(weather.lat, weather.lon);
+    } else {
+        console.error('Missing coordinates in weather data');
+        // Fallback to default coordinates
+        initRadar(40.7128, -74.0060); // New York coordinates as example
+    }
 }
 
-function initRadar() {
+function initRadar(lat, lon) {
     const radarContainer = document.getElementById('radar-container');
-    radarContainer.innerHTML = `
-        <iframe width="100%" height="100%" frameborder="0"
-        src="https://www.rainviewer.com/map.html?loc=${weather.lat},${weather.lon},6&oFa=0&oC=0&oU=0&oCS=1&oF=0&oAP=1&c=1&o=83&lm=1&layer=radar&sm=1&sn=1"
-        allowfullscreen></iframe>
-    `;
+    // Clear previous iframe
+    radarContainer.innerHTML = '';
+    
+    // Create new iframe
+    const iframe = document.createElement('iframe');
+    iframe.width = "100%";
+    iframe.height = "100%";
+    iframe.frameBorder = "0";
+    iframe.src = `https://www.rainviewer.com/map.html?loc=${lat},${lon},6&oFa=0&oC=0&oU=0&oCS=1&oF=0&oAP=1&c=1&o=83&lm=1&layer=radar&sm=1&sn=1`;
+    iframe.onload = () => console.log('Radar loaded successfully');
+    iframe.onerror = (e) => console.error('Radar loading error:', e);
+    
+    radarContainer.appendChild(iframe);
 }
 
 // Initial load
